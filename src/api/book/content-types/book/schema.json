@@ -1,0 +1,61 @@
+{
+  "kind": "collectionType",
+  "collectionName": "books",
+  "info": {
+    "singularName": "book",
+    "pluralName": "books",
+    "displayName": "Book",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "author": {
+      "type": "string",
+      "required": true
+    },
+    "editorial": {
+      "type": "string"
+    },
+    "published_year": {
+      "type": "integer",
+      "required": true
+    },
+    "code": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "number_copies": {
+      "type": "integer",
+      "required": true,
+      "default": 1
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "disponible",
+        "no_disponible",
+        "en_prestamo",
+        "reservado",
+        "otro"
+      ],
+      "default": "disponible",
+      "required": true
+    },
+    "subcategory": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::subcategory.subcategory"
+    }
+  }
+}
