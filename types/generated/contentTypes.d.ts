@@ -696,7 +696,7 @@ export interface ApiBookBook extends Schema.CollectionType {
   attributes: {
     title: Attribute.String & Attribute.Required;
     author: Attribute.String & Attribute.Required;
-    editorial: Attribute.String;
+    editorial: Attribute.String & Attribute.Required;
     published_year: Attribute.Integer & Attribute.Required;
     code: Attribute.String & Attribute.Required & Attribute.Unique;
     description: Attribute.Text;

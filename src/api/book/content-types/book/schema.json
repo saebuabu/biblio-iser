@@ -21,7 +21,8 @@
       "required": true
     },
     "editorial": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "published_year": {
       "type": "integer",
