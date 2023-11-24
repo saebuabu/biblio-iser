@@ -1,21 +1,14 @@
-# Node.js
-# Build a general Node.js project with npm.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
-
 trigger:
 - master
-
-pool:
-  vmImage: ubuntu-latest
-
-steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '10.x'
-  displayName: 'Install Node.js'
-
-- script: |
-    npm install
-    npm run build
-  displayName: 'npm install and build'
+- task: AzureRmWebAppDeployment@4
+inputs:
+ConnectionType: 'AzureRM'
+azureSubscription: 'Azure for Students(289bd2d1-b3e3-415a-98c1-210d50fa0ad7)'
+appType: 'webAppLinux'
+WebAppName: 'iserstrapi'
+deployToSlotOrASE: true
+ResourceGroupName: 'ISERResourcegroup'
+SlotName: 'production'
+packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+RuntimeStack: 'NODE|18-lts'
+StartupCommand: 'node node_modules/@strapi/strapi/bin/strapi.js start'
