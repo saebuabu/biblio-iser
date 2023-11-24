@@ -8,10 +8,17 @@ jobs:
     vmImage: 'ubuntu-latest'
     
   steps:
+  - checkout: self  # Deze taak haalt de broncode van de huidige repository op
   - script: |
      npm install && npm run build
     workingDirectory: $(Build.SourcesDirectory)
     displayName: 'npm install and build'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: '$(System.DefaultWorkingDirectory)'
+      artifactName: 'drop'
+      publishLocation: 'Container'
 
   - task: AzureRmWebAppDeployment@4
     inputs:
