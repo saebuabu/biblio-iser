@@ -10,7 +10,7 @@ jobs:
   steps:
   - script: |
      npm install && npm run build
-    workingDirectory: $(System.DefaultWorkingDirectory)
+    workingDirectory: $(Build.SourcesDirectory)
     displayName: 'npm install and build'
 
   - task: AzureRmWebAppDeployment@4
