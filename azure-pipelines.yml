@@ -9,8 +9,7 @@ jobs:
     
   steps:
   - script: |
-    npm install
-    npm run build
+    npm install && npm run build
     workingDirectory: '/home/site/wwwroot'
     displayName: 'npm install and build'
 
