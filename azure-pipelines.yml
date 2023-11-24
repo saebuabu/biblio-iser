@@ -1,22 +1,29 @@
 trigger:
 - master
 
-steps:
-    task: Npm@1
-    inputs:
-        command: run build
-        cwd: $(targetPath)
+jobs:
+- job: BuildAndDeploy
+  displayName: 'Build and Deploy'
+  pool:
+    vmImage: 'ubuntu-latest'
+    
+  steps:
+  - script: |
+    npm install
+    npm run build
+    workingDirectory: '/home/site/wwwroot'
+    displayName: 'npm install and build'
 
-- task: AzureRmWebAppDeployment@4
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Azure for Students(289bd2d1-b3e3-415a-98c1-210d50fa0ad7)'
-    appType: 'webAppLinux'
-    WebAppName: 'iserstrapi'
-    deployToSlotOrASE: true
-    ResourceGroupName: 'ISERResourcegroup'
-    SlotName: 'production'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
-    RuntimeStack: 'NODE|18-lts'
-    StartupCommand: 'node node_modules/@strapi/strapi/bin/strapi.js start'
+  - task: AzureRmWebAppDeployment@4
+    inputs:
+      ConnectionType: 'AzureRM'
+      azureSubscription: 'Azure for Students(289bd2d1-b3e3-415a-98c1-210d50fa0ad7)'
+      appType: 'webAppLinux'
+      WebAppName: 'iserstrapi'
+      deployToSlotOrASE: true
+      ResourceGroupName: 'ISERResourcegroup'
+      SlotName: 'production'
+      packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+      RuntimeStack: 'NODE|18-lts'
+      StartupCommand: 'node node_modules/@strapi/strapi/bin/strapi.js start'
 
