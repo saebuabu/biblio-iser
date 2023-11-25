@@ -24,12 +24,6 @@ jobs:
   - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
     artifact: drop
 
-  - # task: PublishBuildArtifacts@1
-    # inputs:
-    # pathtoPublish: '$(System.DefaultWorkingDirectory)'
-    #  artifactName: 'drop'
-    #  publishLocation: 'Container'
-
   - script: |
      ls -R $(Pipeline.Workspace)/drop
   - task: AzureRmWebAppDeployment@4
