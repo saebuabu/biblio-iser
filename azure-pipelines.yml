@@ -26,6 +26,8 @@ jobs:
       artifactName: 'drop'
       publishLocation: 'Container'
 
+  - script: |
+     ls -R $(Build.ArtifactStagingDirectory)
   - task: AzureRmWebAppDeployment@4
     inputs:
       ConnectionType: 'AzureRM'
