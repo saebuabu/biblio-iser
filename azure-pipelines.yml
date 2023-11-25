@@ -19,15 +19,19 @@ jobs:
      rootFolderOrFile: '$(System.DefaultWorkingDirectory)' # or specify the path to the folder you want to zip
      includeRootFolder: false
      archiveType: 'zip'
-     archiveFile: '$(Build.ArtifactStagingDirectory)/drop.zip' # specify the desired zip file name and path
-  - task: PublishBuildArtifacts@1
-    inputs:
-      pathtoPublish: '$(System.DefaultWorkingDirectory)'
-      artifactName: 'drop'
-      publishLocation: 'Container'
+     archiveFile: $(Build.ArtifactStagingDirectory)//$(Build.BuildId).zip # specify the desired zip file name and path
+
+  - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+    artifact: drop
+
+  - # task: PublishBuildArtifacts@1
+    # inputs:
+    # pathtoPublish: '$(System.DefaultWorkingDirectory)'
+    #  artifactName: 'drop'
+    #  publishLocation: 'Container'
 
   - script: |
-     ls -R $(Build.ArtifactStagingDirectory)
+     ls -R $(Pipeline.Workspace)/drop
   - task: AzureRmWebAppDeployment@4
     inputs:
       ConnectionType: 'AzureRM'
@@ -37,7 +41,8 @@ jobs:
       deployToSlotOrASE: true
       ResourceGroupName: 'ISERResourcegroup'
       SlotName: 'production'
-      packageForLinux: '$(System.DefaultWorkingDirectory)/drop.zip'
+      # packageForLinux: '$(System.DefaultWorkingDirectory)/drop.zip'
+      packageForLinux: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
       RuntimeStack: 'NODE|18-lts'
       StartupCommand: 'node node_modules/@strapi/strapi/bin/strapi.js start'
 
