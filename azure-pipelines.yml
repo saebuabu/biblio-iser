@@ -35,7 +35,7 @@ jobs:
       deployToSlotOrASE: true
       ResourceGroupName: 'ISERResourcegroup'
       SlotName: 'production'
-      packageForLinux: $(System.DefaultWorkingDirectory)/$(Build.BuildId).zip
+      packageForLinux: $(System.DefaultWorkingDirectory)/drop/$(Build.BuildId).zip
       RuntimeStack: 'NODE|18-lts'
       StartupCommand: 'node node_modules/@strapi/strapi/bin/strapi.js start'
 
